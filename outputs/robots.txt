@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://xinyulong037-cloud.github.io/long-sheng-ren/sitemap.xml
+Sitemap: https://longshengren.space/sitemap.xml
