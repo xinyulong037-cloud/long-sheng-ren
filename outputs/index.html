@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>龙圣人 | 批量邀请函生成器</title>
+  <meta name="description" content="龙圣人批量邀请函生成工具：上传背景图，批量输入姓名，一键生成专属邀请函图片并打包下载 ZIP。全程浏览器本地处理，图片不上传服务器。" />
+  <meta name="keywords" content="邀请函生成器,批量邀请函,龙圣人,邀请函制作,图片文字合成,批量生成图片,邀请函下载" />
+  <meta name="theme-color" content="#1d1d1f" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="龙圣人 · 批量邀请函生成工具" />
+  <meta property="og:description" content="上传背景图，批量输入姓名，一键生成专属邀请函，全程本地处理、隐私安全。" />
+  <meta property="og:site_name" content="龙圣人" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="龙圣人 · 批量邀请函生成工具" />
+  <meta name="twitter:description" content="上传背景图，批量输入姓名，一键生成专属邀请函，全程本地处理、隐私安全。" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body id="top">
+
+  <!-- 顶部导航（Apple 风格深色磨砂） -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#top" aria-label="龙圣人首页">
+        <svg class="logo-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.03 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701z"/>
+        </svg>
+        <span class="nav-name">龙圣人</span>
+      </a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="#tool">生成工具</a>
+        <a href="#preview">预览</a>
+        <a href="#footer">关于</a>
+      </nav>
+      <span class="nav-note">本地处理 · 不上传</span>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">LONG SHENG REN</p>
+      <h1 class="hero-title">龙圣人 · 批量邀请函生成工具</h1>
+      <p class="hero-sub">上传背景图，批量输入姓名，一键生成专属邀请函。<br />全部图片处理在浏览器本地完成，隐私安全。</p>
+      <a class="hero-cta" href="#tool">开始使用</a>
+    </div>
+  </section>
+
+  <!-- 工具区 -->
+  <section class="tool-section" id="tool">
+    <div class="layout">
+      <!-- 左侧：控制区 -->
+      <aside class="panel controls">
+        <!-- 01 背景图上传 -->
+        <section class="card">
+          <div class="card-head">
+            <span class="sec-index">01</span>
+            <h2>背景图上传</h2>
+          </div>
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="上传背景图">
+            <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden />
+            <div class="dz-idle" id="dzIdle">
+              <div class="dz-icon">＋</div>
+              <p>点击选择或拖拽图片到此处</p>
+              <p class="dz-hint">JPG / PNG / WEBP · 本地处理，不上传</p>
+            </div>
+            <div class="dz-loaded" id="dzLoaded" hidden>
+              <img id="dzThumb" alt="背景缩略图" />
+              <div class="dz-meta">
+                <p class="dz-name" id="dzName">background.jpg</p>
+                <p class="dz-size" id="dzSize">1920 × 1080</p>
+              </div>
+              <button class="btn btn-ghost btn-sm" id="btnReplace" type="button">更换</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 02 文字样式参数 -->
+        <section class="card">
+          <div class="card-head">
+            <span class="sec-index">02</span>
+            <h2>文字样式参数</h2>
+          </div>
+          <div class="form-grid">
+            <label class="field">
+              <span class="field-label">字体</span>
+              <select id="fontFamily">
+                <option value="hei" selected>黑体 · 现代</option>
+                <option value="song">宋体 · 典雅</option>
+                <option value="kai">楷体 · 手写</option>
+                <option value="li">隶书 · 古朴</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="field-label">字号（px）</span>
+              <input type="number" id="fontSize" value="80" min="8" max="2000" step="1" />
+            </label>
+            <label class="field">
+              <span class="field-label">字重</span>
+              <select id="fontWeight">
+                <option value="bold" selected>粗体</option>
+                <option value="normal">常规</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="field-label">文字颜色</span>
+              <div class="color-field">
+                <input type="color" id="textColor" value="#ffffff" />
+                <span class="color-val" id="textColorVal">#ffffff</span>
+              </div>
+            </label>
+            <label class="field">
+              <span class="field-label">横向位置 X（px）</span>
+              <input type="number" id="posX" value="0" min="0" step="1" />
+            </label>
+            <label class="field">
+              <span class="field-label">纵向位置 Y（px）</span>
+              <input type="number" id="posY" value="0" min="0" step="1" />
+            </label>
+          </div>
+
+          <div class="stroke-box">
+            <label class="switch-row">
+              <input type="checkbox" id="strokeEnabled" />
+              <span class="switch" aria-hidden="true"></span>
+              <span class="switch-text">文字描边（适配复杂背景）</span>
+            </label>
+            <div class="stroke-options" id="strokeOptions" hidden>
+              <label class="field">
+                <span class="field-label">描边颜色</span>
+                <div class="color-field">
+                  <input type="color" id="strokeColor" value="#000000" />
+                  <span class="color-val" id="strokeColorVal">#000000</span>
+                </div>
+              </label>
+              <label class="field">
+                <span class="field-label">描边宽度（px）</span>
+                <input type="number" id="strokeWidth" value="4" min="1" max="60" step="1" />
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- 03 姓名输入 -->
+        <section class="card">
+          <div class="card-head">
+            <span class="sec-index">03</span>
+            <h2>姓名输入</h2>
+            <span class="badge" id="nameCount">0 人</span>
+          </div>
+          <textarea id="namesInput" placeholder="请输入姓名，用空格分隔&#10;示例：张三 李四 王小明" spellcheck="false"></textarea>
+          <p class="hint">支持空格、换行、中文空格及逗号分隔，自动去重。</p>
+        </section>
+
+        <!-- 05 操作 -->
+        <section class="card">
+          <div class="card-head">
+            <span class="sec-index">05</span>
+            <h2>操作</h2>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btnGenerate" type="button">批量生成</button>
+            <button class="btn btn-accent" id="btnDownload" type="button" disabled>打包下载 ZIP</button>
+            <button class="btn btn-ghost" id="btnReset" type="button">重置</button>
+          </div>
+          <p class="hint" id="actionHint">上传背景图并输入姓名后，即可开始生成。</p>
+        </section>
+      </aside>
+
+      <!-- 右侧：预览 + 结果 -->
+      <section class="panel preview-panel" id="preview">
+        <div class="card preview-card">
+          <div class="card-head">
+            <span class="sec-index">04</span>
+            <h2>效果预览</h2>
+            <span class="hint" id="previewHint">拖拽虚线框调整位置 · 点击预览图快速定位</span>
+          </div>
+          <div class="preview-stage" id="previewStage">
+            <div class="preview-wrap" id="previewWrap" hidden>
+              <canvas id="previewCanvas"></canvas>
+              <div class="drag-handle" id="dragHandle" title="拖拽调整文字位置"></div>
+            </div>
+            <div class="preview-empty" id="previewEmpty">
+              <div class="empty-icon">＋</div>
+              <p>请先上传背景图</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card results-card" id="resultsSection" hidden>
+          <div class="card-head">
+            <h2>生成结果</h2>
+            <span class="badge" id="resultCount">0 张</span>
+          </div>
+          <div class="results-grid" id="resultsGrid"></div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <footer class="site-footer" id="footer">
+    <p class="footer-note">本工具全程在浏览器本地运行，图片不上传任何服务器。</p>
+    <p class="footer-copy">© 龙圣人</p>
+  </footer>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="jszip.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
